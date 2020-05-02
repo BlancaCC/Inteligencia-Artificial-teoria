@@ -1,0 +1,230 @@
+\documentclass[a4paper]{article}
+%\documentclass[12pt,a4paper,oneside,draft]{article}%{report}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath} 
+\usepackage{amssymb} % utlizar mathbb
+
+
+\title{Teoría Inteligencia Artificial}
+\author{Blanca Cano Camarero}
+
+\begin{document}
+\begin{titlepage}
+\maketitle
+\tableofcontents
+
+\end{titlepage}
+
+
+
+
+\section{Agentes}
+    \textit{Concepto de Agente. Agentes racionales comparados con  agentes inteligentes. Arquitecturas de agentes.}
+
+\subsection{Concepto agente}
+
+Un agente es cualquier cosa capaz de percibir su medio ambiente con la ayuda de sensores 
+y actuar en ese medio utilizando actuadores (Stuar Russell,Inteligencia Artificial. Un enfoque moderno, 2011, p. 37).
+Entendiendo por actuador al elemento que reacciona a un estímulo. 
+mediante una acción. La secuencia de percepciones de un agente refleja el historial 
+completo de lo que el agente ha recibido. Un agente tomará una decisión en un momento dado
+ dependiendo de la secuencia completa 
+o de una parte de ella. En términos matemáticos se puede decir que el comportamiento del 
+agente viene dado por la función del agente que a cada percepción le asocia una acción. 
+Un agente que cumpla lo anterior será autónomo (no necesita al humano) y proactivo (toma sus
+ propias decisiones). Además, es deseable que sea social para servirse de otros agentes para
+  lograr su objetivo.
+
+Las características indispensables de los agentes son: la capacidad estímulo respuesta, 
+un corpontamiento proactivo y autonomía. Otra caracterísitica posible 
+sería la de ser social, es decir interactuar con otros agentes o humanos. 
+
+
+
+\subsection{ Agentes inteligentes y agentes racionales}  
+
+Se \textbf{consideran inteligentes} a aquellos agentes capaces de superar el test de Turing, es decir si consigue
+ aparentar ser un humano para ciertas pruebas. \paragraph{}
+
+ Los \textbf{agentes racionales} son aquellos que buscan el comportamiento mejor dentro de las opciones de las que
+ disponen. 
+
+ \subsection{Arquitecturas de los agentes}  
+Russel define un agente como la arquitectura que tiene más el programa que utiliza. 
+
+La arquitectura coordina el manejo de la información obtenida por los sensores, ejecución de los programas y actuadores. 
+
+\subsubsection*{Clasificación de arquitecturas por su topología}
+
+\begin{itemize}
+  \item \textbf{ Arquitectura horizontal.} Todas las capas que constituyen al agente con capaces
+  de percibir el estímulo del entorno y realizar acciones. 
+
+  \item \textbf{Arquitectura vertical.} Una capa percibe los estímulos del entorno, transmite la información a otras capas \textit{superiores}
+  y es la última la que realiza las acciones. 
+
+\item \textbf{Arquitectura híbrida.} Se comporta como la arquitectura vertical ya que todas las capas forman una cadena
+recibiendo y transmitiendo la información a adistinto niveles, 
+pero es la capa que percibe el entorno la que se encarga de realizar las acciones.
+
+\end{itemize}
+
+\subsubsection*{Clasificación de arquitecturas por su abstracción.}
+\begin{itemize}
+  \item \textbf{Arquitecturas deliberativas.} Comprenden un sistema simbólico de la realidad, hipótesis sobre estos y un agente deliberativo 
+  cuyas decisiones se realizan a través de un razonamiento lógico basado en emparejamiento de patrones y manipulaciones simbólicas.
+  Suelen estar diseñados con una estructura vertical y deben tener en cuenta el tiempo de respuesta y manejo de símbolos apropiado. 
+  
+  \item \textbf{Arquitecturas reactiva.} Aquellas que no incluyen ninguna clase de modelo centralizaod de representación
+  simbólica del mundo, y no hace uso del razonamiento complejo; se construyen bajo esquemas de percepción y acción, con lo que se busca
+  una respuesta rápida y eficaz. Aunque existen agentes reactivos con memoria con el fin de conseguir retroalimentación.  
+  
+  \item \textbf{Arquitecturas híbridas. } Combinan arquitecturas deliberativas y reactivas, un paradigma recomendado para la respuesta a problemas
+  no previstos durante el desarrollo del plan. 
+\end{itemize}
+
+
+\newpage
+\section{ Características de los Agentes reactivos y deliberativos.}
+ \textit{Características de los Agentes reactivos y deliberativos. Similitudes y diferencias. Arquitecturas.}
+
+\subsection{Agentes reactivos}
+Son aquellos agentes que siguen un ciclo acción-reacción y no poseen ningún modelo del mundo, aunque si posee memoria puede ir
+construyéndolo. Su comportamiento está basado en reaccionar a sensores, la cual puede modifificarse si existe retroalimentación, 
+por información almacenada en memoria.
+
+Es necesario para su buen funcionamiento que el diseño abarque todos los estados posibles. 
+Sus características principales es que realizan pocos cálculos, almacenan todo en memoria y usan arquitecturas 
+horizontales. 
+
+Un ejemplo de estrategias de diseño es: 
+
+\begin{itemize}
+  \item  \textbf{Arquitectura de subsunción:} Consiste en agrupar comportamientos en módulos y dada una percepción, uno de los comportamientos se activará. (Pensar en un switch).
+  \item  \textbf{Agentes reactivos con memoria.} Mejorar la precisión de respuesta gracias a la memoria de estímulos recibidos. 
+  Un ejemplo de este es la implementación basada en pizarras, es decir una memoria común a todos los programas del agente (módulos de conocimiento).
+\end{itemize}
+
+\subsection{Agentes deliberativos}
+
+Los agentes deliberativos son aquellos que tienen un modelo del mundo y elboran un plan según los efectos de
+su acciones sobre esos símbolos físicos. Sus decisiones se realizan sobre esos símbolos físicos, a partir de las hipótesis que poseen,
+no reaccionan a los eventos. 
+Usan arquitecturas verticales.
+
+A la hora de diseñar, la abstracción de la realidad para desarrollar el modelo  o estados del agente, es donde reside la dificultad, 
+,es más, si se usa una arquitectura deliberativa pura y el sistema lógico no es completo podría no alcanzar nunca una solución (((((y si es completo no será consistente xD)))))). 
+
+
+
+\subsection*{Conclusión}
+Las diferencia esenciales son. 
+
+\subsubsection*{agentes reacitvos: }
+
+\begin{itemize}
+  \item Diseño explícito y completo de situaciones posibles.
+  \item Pocos cálculos.
+  \item Almacenan todo en memoria.
+  \item Arquitecturas horzontales.
+\end{itemize}
+
+\subsubsection*{Los agentes deliberativos: }
+
+\begin{itemize}
+  \item Razonamiento lógico sobre modelos (conocen el mundo).
+  \item Usan arquitecturas verticales.
+\end{itemize}
+
+\newpage
+
+\section{Preguntas pendientes del tema 1}
+3.- Describir brevemente los métodos de búsqueda no informada.
+
+4.- El concepto de heurística. Como se construyen las heurísticas. Uso de las heurísticas en IA.
+
+5.- Los métodos de escalada. Caracterización general. Variantes.
+
+6.- Características esenciales de los métodos “primero el mejor”.
+
+7.- Elementos esenciales del algoritmo A*.
+
+8.- Elementos esenciales de un algoritmo genético.
+
+\section{Preguntas pendientes del tema 2}
+
+\section{Componentes de un juego}
+\subsection{Definición de juego}
+
+Un juego es cualquier situación de decisión de varios agentes, (jugadores)
+gobernada por un conjunto de reglas y con un resultado bien definido, caracterizada porque ninguno de los 
+jugadores con su sola acutación puede determinal el resutlado (independecia estratégica). 
+
+Es decir, nos encontramos en un entorno multiagente, donde la imprevisibilidad de estos introducen 
+contingencias. En IA los juego son por lo general los de suma cero (la ganancio o pérdida de un jugador se equilibra con la del otro)
+, de dos jugadores, por turnos, deterministias,
+de información perfecta. 
+
+Las compentes de un juego son: 
+
+\begin{itemize}
+  \item \textbf{Número de jugadores.}
+  \item Si es \textbf{de información perfecta}, toda la información del juego es conocida por todos los jugadores (vg ajedrez). 
+  o por el contrario \textbf{ de información imperfecta} se oculta la información parcialmente (póker).
+  \item \textbf{Determinista o no}, si el azar influye (la oca).
+  \item  Si es \textbf{Por turnos}
+  \item Existencia o no de pagos colaterales. Que la acción de un jugador, beneficie a otro llegando así a un equilibrio de Nash. 
+  \item Juegos de \textbf{suma nula} el beneficio total para todo los jugadores suma 0, en contraposición de \textbf{suma no nula}, 
+  donde la ganancia de un jugador no necesariamente significa la pérdida del otro.  
+\end{itemize}
+
+\subsection{Equilibrio de Nash}
+(Wikipedia principal fuente)
+
+Es un concepto de solución para juegos multijugadores del cual se toma como hipótesis 
+que todo jugador a adoptado su mejor estrategia y todos conocen la estrategia de los otros.
+
+De aquí deducimos de que tras esto no beneficia cambiar de estrategia ya que el resto no la va a alterar
+y en tal cicunstancia ya teniamos la mejor. 
+
+Además el resultado maximiza el beneficio individual no el de conjunto, lo cual podría dar a que 
+si todos coordinaran este fuera mejor para todos (en un juego de dos jugadores esto no tiene sentido, pero sí en "alianzas"). 
+
+
+Un ejemplo sería el juego del dilema del prisionero, pero introduciendo más jugadores, 
+donde la mejor estrategia individual sería declarar ya que minimiza la pérdida, sin embargo 
+si todos cooperaran no confesando el beneficio global sería mayor. 
+
+\newpage
+
+\section{ramificación}
+\textit{Qué es el factor de ramificación y cómo afecta a la complejidad de un juego? Describe en líneas generales el algoritmo minimax y el de la poda alfa-beta }
+(Capítulo 6 del Russell Norvig)
+
+\subsection{Definición factor de ramificación}
+Dada una estructura de árbol el \textbf{factor de ramificación} es el número medio de hijos en cada nodo. 
+Que esto en los juegos se manifiesta como el número de movimientos posibles por turno.  
+
+Cuanto mayor sea el factor de ramificación, mayor será la complejidad a la hora de buscar estrategias, ya que 
+llegado cierto punto es imposible una búsqueda exhaustiva de la mejor solución.
+
+En ajedrez el 
+factor de remificación es 35, que por combinatoria en $m$ movimientos se habrá habido una media de $35^m$ posibilidades.  
+Este es el mismo motivo por el que solo se ha conseguido una IA que juegue como un aficionado en el GO.
+
+De aquí surgen la estrategias de poda de nodos: 
+
+\subsection{Algoritmo min-max}
+
+
+
+\newpage
+3.- ¿Que problemas plantea el cálculo de predicados en la resolución de problemas de IA?
+4.- Modelos de conocimiento heredable ¿Qué tipo de conocimiento organizan las redes semánticas? Describir en líneas generales el concepto de “frame”.
+5.-  Estructura y componentes de un sistema experto 
+6.- Paradigmas de Aprendizaje Automático.
+7.- Describir el problema del ruido y el del sobreajuste en aprendizaje automático.
+8.- ¿Qué son y como se construyen los arboles de decisión
+
+\end{document}
