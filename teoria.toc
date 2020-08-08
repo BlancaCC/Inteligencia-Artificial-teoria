@@ -1,0 +1,49 @@
+\babel@toc {spanish}{}
+\contentsline {section}{\numberline {1}Agentes}{1}% 
+\contentsline {subsection}{\numberline {1.1}Concepto agente}{1}% 
+\contentsline {subsection}{\numberline {1.2} Agentes inteligentes y agentes racionales}{1}% 
+\contentsline {paragraph}{}{1}% 
+\contentsline {subsection}{\numberline {1.3}Arquitecturas de los agentes}{1}% 
+\contentsline {section}{\numberline {2} Características de los Agentes reactivos y deliberativos.}{3}% 
+\contentsline {subsection}{\numberline {2.1}Agentes reactivos}{3}% 
+\contentsline {subsection}{\numberline {2.2}Agentes deliberativos}{3}% 
+\contentsline {section}{\numberline {3}Métodos de búsqueda no informada}{5}% 
+\contentsline {subsection}{\numberline {3.1}Búsqueda primero en profundidad}{5}% 
+\contentsline {subsection}{\numberline {3.2}Búsqueda primero en anchura}{5}% 
+\contentsline {subsection}{\numberline {3.3}Búsqueda de coste uniforme}{5}% 
+\contentsline {subsection}{\numberline {3.4}Backtracking}{5}% 
+\contentsline {subsection}{\numberline {3.5} Descenso iterativo}{5}% 
+\contentsline {subsection}{\numberline {3.6}Búsqueda bidereccional}{6}% 
+\contentsline {section}{\numberline {4}El concepto de heurística. Como se construyen las heurísticas. Uso de las heurísticas en IA.}{7}% 
+\contentsline {subsection}{\numberline {4.1}Concepto de heurística}{7}% 
+\contentsline {subsection}{\numberline {4.2}Cómo construir una heurística}{7}% 
+\contentsline {subsubsection}{\numberline {4.2.1}Ejemplos}{7}% 
+\contentsline {section}{\numberline {5}Los métodos de escalada. Caracterización general. Variantes.}{8}% 
+\contentsline {subsection}{\numberline {5.1}Algoritmo de escalada simple}{8}% 
+\contentsline {subsection}{\numberline {5.2}Escalada por máxima pendiente}{9}% 
+\contentsline {subsection}{\numberline {5.3}Escalada estocástica}{9}% 
+\contentsline {subsection}{\numberline {5.4}Escalada de primera opción}{9}% 
+\contentsline {subsection}{\numberline {5.5}Escala con reinicio aleatorio}{9}% 
+\contentsline {subsection}{\numberline {5.6}Algoritmo de enfriamineto simulado o temple simulado}{9}% 
+\contentsline {subsection}{\numberline {5.7}Algoritmo de haz local}{10}% 
+\contentsline {section}{\numberline {6}Características esenciales de los métodos “primero el mejor”.}{11}% 
+\contentsline {section}{\numberline {7}Elementos esenciales del algoritmo A*}{12}% 
+\contentsline {subsection}{\numberline {7.1}Propiedas}{13}% 
+\contentsline {section}{\numberline {8}Elementos esenciales de un algoritmo genético}{14}% 
+\contentsline {section}{\numberline {9}Componentes de un juego}{16}% 
+\contentsline {subsection}{\numberline {9.1}Definición de juego}{16}% 
+\contentsline {subsubsection}{\numberline {9.1.1}Definición formal de juego}{16}% 
+\contentsline {subsection}{\numberline {9.2}Las compentes de un juego}{16}% 
+\contentsline {subsection}{\numberline {9.3}Equilibrio de Nash}{17}% 
+\contentsline {section}{\numberline {10}Ramificación. Algoritmo minimax. Poda alfa-beta}{18}% 
+\contentsline {subsection}{\numberline {10.1}Definición factor de ramificación}{18}% 
+\contentsline {subsection}{\numberline {10.2}Algoritmo minimax}{18}% 
+\contentsline {subsection}{\numberline {10.3}Poda alfa-beta}{20}% 
+\contentsline {section}{\numberline {11}Problemas que plantea el cálculo de predicados en la resolución de problemas de IA}{22}% 
+\contentsline {section}{\numberline {12}Modelos de conocimiento heredable ¿Qué tipo de conocimiento organizan las redes semánticas? Describir en líneas generales el concepto de “frame”.}{24}% 
+\contentsline {subsection}{\numberline {12.1}Sistemas basados en frames}{24}% 
+\contentsline {subsubsection}{\numberline {12.1.1}Facetas}{25}% 
+\contentsline {section}{\numberline {13}Estructura y componentes de un sistema experto }{26}% 
+\contentsline {section}{\numberline {14}Paradigmas de Aprendizaje Automático.}{28}% 
+\contentsline {section}{\numberline {15}Describir el problema del ruido y el del sobreajuste en aprendizaje automático.}{30}% 
+\contentsline {section}{\numberline {16}Qué son y cómo se construyen los árboles de decisión}{32}% 

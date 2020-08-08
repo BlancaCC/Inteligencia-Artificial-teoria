@@ -1,10 +1,10 @@
-\documentclass[a4paper]{article}
-%\documentclass[12pt,a4paper,oneside,draft]{article}%{report}
+\documentclass[12 pt, a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
 \usepackage{amsmath} 
 \usepackage{amssymb} % utlizar mathbb
-
+\usepackage{graphicx}
+\graphicspath{ {/home/blanca/repositorios/Inteligencia-Artificial-teoria/img/algoritmo_genetico/img/} }
 
 \title{Teoría Inteligencia Artificial}
 \author{Blanca Cano Camarero}
@@ -139,20 +139,342 @@ Las diferencia esenciales son.
 
 \newpage
 
-\section{Preguntas pendientes del tema 1}
-3.- Describir brevemente los métodos de búsqueda no informada.
 
-4.- El concepto de heurística. Como se construyen las heurísticas. Uso de las heurísticas en IA.
+\section{Métodos de búsqueda no informada}  
+ Describir brevemente los métodos de búsqueda no informada.
+ \subsection{Búsqueda primero en profundidad}  
+ En este método se expande el nodo más profundo de la frotera, es decir el último sucesor que se generó.
+ 
+ Se implementa como es natural con una pila. No asegura la optimalidad. 
+ 
+ De él aparecen variantes como backtracking y descenso iterativo que comentaremos más adelante.
 
-5.- Los métodos de escalada. Caracterización general. Variantes.
+ 
+\subsection{Búsqueda primero en anchura}
+Se exploran las posibles soluciones de generación en generación, es decir
+ partir de un estado inicial, se analizan todos sus nodos sucesores, generando con ellos un nivel; 
+ de estos hijos sus sucesores conformarán un nuevo nivel. 
 
-6.- Características esenciales de los métodos “primero el mejor”.
+ No se pasa a explorar un nivel sin haber explorado antes todos los anteriores. 
 
-7.- Elementos esenciales del algoritmo A*.
+ La solución es óptima si lor operadores de búsqueda tienen el mismo coste. 
+ La implementación más común es utilizar una cola de nodos abierto, es decir donde ir metiendo
+ los nuevos nodos sucesores. 
 
-8.- Elementos esenciales de un algoritmo genético.
 
-\section{Preguntas pendientes del tema 2}
+ \subsection{Búsqueda de coste uniforme}
+
+ Es una variante del método anterior, el criterio de selección no es el de estar
+ en un nivel más cercano a la raíz, si no que dada un función coste, el nodo que tenga menor coste. 
+
+ Solo se tiene información de los nodos de la frontera, lo que hace que sea una búsqueda no informada.
+ 
+ 
+
+\subsection{Backtracking}
+Aparece un profundidad límite en la que seguir explorando; una vez alcanza ese límite se comienza a explorar no los sucesores
+a este si no los anteriores. 
+
+\subsection{ Descenso iterativo}  
+Combina las ventajas de profundidad iterativa y anchura. 
+
+La idea es la siguiente, si cada nivel que generábamos con el método en anchura se 
+correspondería a una búsqueda en profundidad con un límite de uno; es decir una línea de sucesores de un nodo,
+ ahora el límite de profundidad a explorar aumenta progresivamente a más niveles generados. 
+
+\subsection{Búsqueda bidereccional}  
+Se ejecutan dos búsquedas simultáneas, una parte de la raíz o estado inicial y otra 
+del estado al que queremos decir, es decir, haciendo una búsqueda hacia atrás del objetivo. 
+
+Se dará por finalizada cuando ambas alcancen el mismo nodo; se encuentren en el centro.
+
+Esta búsqueda es completa y óptima. 
+
+
+
+
+
+
+
+
+\newpage
+
+\section{El concepto de heurística. Como se construyen las heurísticas. Uso de las heurísticas en IA.}
+
+\subsection{Concepto de heurística}  
+
+La exploración exhaustiva es inabarcable por tanto surge la necesidad de métodos discriminantes
+de qué métodos explorar. Una heurística es una función que estima lo\textit{prometedor} que un nodo puede llegar a ser. 
+
+\subsection{Cómo construir una heurística}
+
+Debemos tener en cuenta la descripción de los nodos; el historial, los nodos visitados hasta 
+ese punto de la búsqueda y cualquier conociento que se tenga sobre el problema puede ser útil. 
+
+Además de considerar un equilibrio en el coste computacional de esta función. 
+
+Las heurística provienen de modelos simplificados del dominio denominados \textbf{problemas relajados.}
+
+\subsubsection{Ejemplos}
+En la práctica 2 de la asignatura, para estimar la distancia restante desde un punto a otro utilizar la distancia manhattan o la línea recta. 
+
+Y para estimar el gasto de batería tener una función peso. 
+
+
+
+Por lo general no garantizan la solución óptima, pero sí que tienen resultado satisfactorios.
+
+\newpage
+
+(Faltaba: Justificar la necesidad de las variantes estocásticas para evitar estancamientos y caer en óptimos locales)
+
+\section{Los métodos de escalada. Caracterización general. Variantes.}
+Su idea reside en seleccionar una mejor solución obtenida por una heurística en un entonorno 
+local al nodo en curso, y de esta manera ir recorriendo la soluciones emergentes hasta alcanzar un alcanzando óptimo que será local 
+o global en algunos casos siempre que se demueste.
+
+Entenderemos por vecindad a ese entorno local. 
+
+Partiendo pues de la búsqueda en profundidad y modificando el criterio 
+de selección del nodo sucesor a partir de cierta \textit{vecindad} surge esta familia de nodos. 
+
+Podríamos utilizar estos métodos en los que se prima el objetivo más que el desarrollo hasta alcanzarlo. 
+Otra característica es el poco uso de memoria que requieren, ya que solo se guarda los nodos para los que se va a hallar las
+vecindad. 
+
+En conclusión tienen las siguientes características: 
+
+\begin{itemize}
+  \item Poco uso de memoria cuya cantidad puede incluso ser constanste o acotarse. 
+  \item Encuentra soluciones aunque el espacio sea infinito (o lo sucientemente grande para que sea descabellado una búsqueda exhaustiva).
+  \item Informado: necesita conocer el estado para seleccionar un nodo. 
+  \item No completo: No siempre es óptimo global el resultad, esto se debe a que no hace una exploración exhaustiva.
+\end{itemize}
+
+Veamos ahora distintos métodos de búsqueda. 
+
+\subsection{Algoritmo de escalada simple}
+La vecindad de un nodo es el conjunto de hijos obtenidos secuencialmente
+hasta que aparece uno mejor que el padre (según la función de evaluación). 
+
+El problema que tiene este algoritmo es que depende del orden en que se generen los hijos. 
+ Además si la solución es imposible explorará todo el árbol de posibilidades. 
+
+
+ \subsection{Escalada por máxima pendiente}
+  A diferencia del anterior ahora la vecindad son TODOS (no los explorados hasta el primero mejor) los hijos obtenidos secuencialemte.
+  Se selecciona el mejor que pasa a ser el nodo en curso y el proceso se repite hasta obtener una solución o que no sea posible
+  encontrar un en la vecindad mejor que el padre, que entonces se para el algoritmo.
+
+  No es un algoritmo completo, es rápido y útil si la función es monótoma. 
+
+  Pero con este y el anterior surgen el problema de encontrarnos máximo o mínimos locales 
+  atractivos que nos impidan encontrar la solución. 
+
+
+
+
+
+  Luego para intentar sortearlo surgen los algoritmo con variaciones estocásticas que cada iteración
+  recorren el árbol de búsqueda de una manera diferente; un problema de esto es que se desconoce cuántas 
+  repeticiones hacer.  
+
+
+
+  \subsection{Escalada estocástica}
+
+  Los método estocásticos se usan para intetar salir de los máximo mínimos locales. Todos tienen el problema que no saben cómo parar. 
+
+  Como no hay razón para priorizar un sucesor que otro se escoge entre los sucesores con mejor valoración que el estado actual. 
+
+  \subsection{Escalada de primera opción}  
+Ahora el azar se encuentra en el orden de generar los sucesores y la elección es el primero mejor. 
+
+  \subsection{Escala con reinicio aleatorio}  
+
+  Se repite varias veces la búsqueda, partiendo cada vez de un estado inicial distinto generado aleatoriamente. 
+  Si la probabilida de éxito es $p$, por tratarse de una binomial, la esperanza de reinicios es $\frac{1}{p}.$ Destaca por lo sorprendentemente
+  efectivo que resulta. 
+
+  \subsection{Algoritmo de enfriamineto simulado o temple simulado}  
+
+  Toma la idea de los principios de la termodinámica. 
+  Para evitar que se finalice en máximos locales se seleccionan de forma controlada
+  movimientos peores. 
+  Los pasos son los siguientes: 
+  Cada nodo tiene una probabilidad de ser elegido menor que uno, 
+  se selecciona uno aleatoriamente; si es mejor se toma como nodo actual, si no
+  dependerá inversamente de lo cerca que estemos de la solución y de lo malo que sea; es decir
+  cuanto peor sea y más cerca nos encontremos del objetivo menos probabilidad habrá de seleccionar un caso
+  localmente desfavorable.
+
+  El temple simulado termina cuando se ha alcanzado el objetivo-
+
+
+  Existen otras variante como los algoritmos genéticosy los algoritmo de haz local. 
+
+  \subsection{Algoritmo de haz local}  
+
+  El algoritmo guarda la pista de $k$ estados (no solo de uno). Los primeros estados son generados aleatoriamente, si alguno es la solución se para; 
+  si no se toman los $k$ mejores y se vuelve a repetir el proceso. 
+  (no confundir con el algoritmo de reinicio aleatorio).
+
+  Una variante es la llamada búsqueda de haz estocástica, donde los $k$ nodos seleccionados no son los mejores sino aleatorios. 
+
+  Veamos que este concepto nos va a ser de utilidad para introducir los algoritmos genéticos.
+
+
+\newpage
+
+\section{Características esenciales de los métodos “primero el mejor”.}
+
+Son variantes del algoritmo de Dijkstra, en vez de generar todos los mejores caminos nos quedamos 
+con el primero y nos paramos cuando lo hayamos encontrado.  
+
+Es decir, expandiremos el mejor de los nodos bajo hipótesis de que nos acercará al objetivo de manera
+más rápida. 
+
+A la hora de implementarlo se usan dos listas, una de nodos abiertos y otra de cerrados. 
+
+En la de abiertos mantenemso aquellos generados pero no explorados (de los que todavía no se han derivado sucesores), 
+es una lista que se ordena en función del valor asignado por una heurística, lo que en c++ podría ser 
+una cola con prioridad. 
+
+
+
+La lista de cerrados contienen los nodos ya visitados con el fin de no repetirlos. 
+
+El procedimiento es el siguiente:
+
+\begin{enumerate}
+  \item Se crea el grafo de búsqueda $G$ con un nodo inicial $I.$
+  \item Se analiza la lista de abiertos con $I$ y la de cerrados vacía. Se inicializa también la variable de éxito a un valor False.
+  \item Mientras la lista de Abiertos no esté vacía o su éxito no se True: 
+  
+   (a) Quitar el primer nodo de abiertos (N) con mayor prioridad en función de nuestra heurística
+   y meterlo en cerrados.
+
+
+   (b) Si N es el estado final entonces éxito es True.
+
+
+   (c)  Si no expandir N generando su conjunto de Sucesores S y añadiéndolo a la lista de abiertos
+    siempre que no estén en cerrado y no se repitan (trabajar con conjuntos sería lo ideal).
+
+
+    (d) Se genera un nodo en G para cada s de S, (tener en cuenta que estos nodos deben de registrar su antecesor de alguna manera
+    o representar de alguna manera los nodos de los que proceden).
+
+      \item Si ÉXITO entonces la solución de el camino desde I a N a través de nuestros nodos. 
+      \item Si no no se ha encontrado solución. 
+      
+  
+\end{enumerate}
+
+Este algorimo se refleja perfectamente en el costo uniforme de la práctica 2. 
+
+\newpage
+(detallar más el algoritmo A* gestión abiertos y cerrados más compleja que en primero mejor por la forma de f(n))
+\section{Elementos esenciales del algoritmo A*}
+
+El algoritmo $A^*$ es un método del tipo "Primero mejor" donde la función de evaluación es la suma 
+de dos, una basada en datos conocidos del nodo, un historial de él y una heurística. 
+
+\subsection*{Descripción del algoritmo}  
+
+\begin{itemize}
+  \item $g(n)$ la distancia del camino obtenido hasta el momento (desde el nodo inicio hata el nodo enésimo $n$). 
+  \item $h(n)$ es la heurística y expresa la distancia estimada desde el nodo $n$ hasta el objetivo. 
+  \item Se impone la restricción de que la heurística no sobreestime el coste de llegar al destino, ya que esto
+  causará peor exactitud. 
+  \item A la hora de implementarlo existen dos listas, una de cerrados y otra de abiertos. 
+  \item La lista de abierto contiene nodos que aún no se han expandido ordenados según $f$. 
+  \item La lista de cerrados contienen los nodos ya expandidos. 
+  \item En cada paso se selecciona el nodo más prometedor (calculado a partir de $f$), se inserta en cerrados 
+  es el objetivo se para la búsqueda sino se generan sus sucesores que se incluyen en abiertos. 
+  
+  
+\end{itemize}
+
+Es decir si nos encontramos buscando el camino más corto, la primera función $g(n)$ nos dirá la distancia 
+exacta que ha recorrido el nodo hasta entonces mientras que la función heurística $h(n)$ estimará la distancia 
+(por ejemplo con la distancia euclídea o la Manhattan) y nuestra función de evaluación 
+$f(n) = g(n)+h(n)$  expresará la distancia estimada de la ruta construída por el nodo $n$.
+
+Respecto al diseño es algo más complejo que en los algoritmos de primero mejor, 
+dos listas de nodos, abiertos y cerrados, donde en abiertos están los candidatos generados de nodos anteriores y de los que 
+se va extrayendo el más prometedor, añadiéndolo a la lista de cerrados, es decir nodos ya visitados y si esta no es la 
+solución generando nuevos candidatos sin repetir los ya generados. 
+
+\subsection{Propiedas}
+
+Llamemos $h^*(n)$ al coste de camino óptimo en cualquier nodo $n$ y al coste del camino óptimo como 
+$f^*(n) = g(n)+ h^*(n)$ entonces lo ideal sería que si nuestra función heurística $h$ fuera igual que $h^*$.
+
+Sea pues a la hora de construir $h$ tendremos las siguientes consideraciones: 
+\begin{itemize}
+  \item siempre que $h(x) > 0.$
+  \item Una heurística se considera admisible si $h(n) \leq h^*(n)$ para todo nodo $n.$
+  \item Si tenemos dos heurísticas admisible $h_1, h_2$ será mejor aquella $h_2$ que para todo nodo $n$ cumpla que $h_1(n) \leq  h_2(n) \leq h^*(n)$ ya que será mejor
+  estimador. 
+  \item Será consistente  la heurística si dados el nodo $x$ y su sucesor $y$, $h(x)-h(y) \leq g(y)-g(x)$ es decir el gasto que produce el camino entre $x,y$ es mayor o igual 
+  que lo que consumiría el trayecto estimado.
+  
+  Si se cumple la condición de consistencia entonces $f$ es no decreciente y esto implicaría que que cada vez que se expande un nodo, se encuentra un camino que mejora al mismo. 
+\end{itemize}
+
+Como consideraciones finales, nótese que si $h$ es la función constantemente cero, entonces el algoritmo es idéntico al de Dijsktra. 
+Una de las limitaciones que tenemos con este algoritmo es el costo en memoria, ya que requiere almacenar los nodos que se van generando y almacenar de algún 
+modo esa jerarquía de generación. 
+
+Por otro lado encontrar una heurística adminsible y consistente no es un proceso sistematizado
+y puede dar problemas. 
+
+\newpage
+
+\section{Elementos esenciales de un algoritmo genético}
+
+Los algoritmos genéticos son métodos adaptativos o sistemáticos que pueden usarse para resolver problemas de búsqueda y optimización,
+aplican estrategias biológicas basadas en la reproducción sexual y adaptativa. 
+
+Es además una variande de la búsqueda de haz estocástica, en la que los estados sucesores se generan combinando dos estados "padres". 
+Introduciremos los siguientes tecnicismo: 
+
+\begin{itemize}
+  \item Población o cromosoma: Conjunto de $k$ estados generados aleatoriamente y que representan soluciones. 
+  \item Cromosoma: Representa solución al problema, puede ser expresado como vectro binario. 
+  Conjunto que recoge las caractiristica, variables o atributos del vector que representa una solución; es decir,  un elemento del cormosoma,  Individuo o gen: Cada estado, representado por una cadena finita. 
+  lo más común es que sea binaria. 
+  \item Selección natural, reproducción sexual: Operador de cruce o selección, el encargado de ver cómo se cruzan los cromosomas.
+  \item Mutación: Operador de modificación. 
+  \item Cambio generacional: Operador de reemplazamiento (cómo se reemplaza la función). 
+  
+\end{itemize}
+
+El algoritmo se compone de los siguientes paso: 
+\begin{enumerate}
+  \item Inicialización: Se genera aleatoriamente una población inicial; cromosomas que representan posibles soluciones. 
+
+\item Evaluación: A cada cromosoma de la población se le aplica una función de idoneidad o de evaluación, que a mejor solución devuelve resultados 
+más grandes. 
+
+\item Cruce: se selecciona dos pares de manera aleatoria (u otro criterio) para la reproducción. Hay muchas variantes para
+esta regla de selección, se ha demostrado que un método selectivo hace que converja a la solución 
+más rápido que la versión aleatoria.
+
+\item Mutación: Cada posición está sugeta a una mutación aleatoria con una probabilidad independiente. 
+Como la búsqueda por haz estocástica se combinan tendencia ascendente aleatoria que cambia la información entre hijos paralelos. 
+
+\item Esquema: Se puede trabar dejando posiciones inespecíficas. 
+\end{enumerate}
+
+%\newpage
+
+%\includegraphics{gen.png}
+
+El problema que tiene esta metodología es decidir con cuántas iteraciones parar. 
+
+\newpage
 
 \section{Componentes de un juego}
 \subsection{Definición de juego}
@@ -165,8 +487,19 @@ Es decir, nos encontramos en un entorno multiagente, donde la imprevisibilidad d
 contingencias. En IA los juego son por lo general los de suma cero (la ganancio o pérdida de un jugador se equilibra con la del otro)
 , de dos jugadores, por turnos, deterministias,
 de información perfecta. 
+\subsubsection{Definición formal de juego}
+Clase de problemas de búsqueda con los siguientes componentes. 
 
-Las compentes de un juego son: 
+\begin{itemize}
+  \item \textbf{Estado inicial}, posición tablero y el jugador que mueve.
+  \item \textbf{función sucesor} lista de pares de (\textit{movimiento,estado}), con todos los movimientos legales y su estado resultante. 
+  \item \textbf{test terminal}, determina si un nodo es terminal, es decir si se termina el juego en él. 
+  \item \textbf{Función utilidad, objetivo o rentabilidad}; da valor numérico a nodos terminales.
+\end{itemize}
+
+Se denomina \textbf{árbol de juego} a aquel cuya raíz es el estado inicial y sus sucesivos hijos los movimientos legales. 
+
+\subsection{Las compentes de un juego}
 
 \begin{itemize}
   \item \textbf{Número de jugadores.}
@@ -180,7 +513,7 @@ Las compentes de un juego son:
 \end{itemize}
 
 \subsection{Equilibrio de Nash}
-(Wikipedia principal fuente)
+(Wikipedia principal fuente, lo he ampliado porque me interesaba)
 
 Es un concepto de solución para juegos multijugadores del cual se toma como hipótesis 
 que todo jugador a adoptado su mejor estrategia y todos conocen la estrategia de los otros.
@@ -198,7 +531,9 @@ si todos cooperaran no confesando el beneficio global sería mayor.
 
 \newpage
 
-\section{ramificación}
+(minimix juegos bipersonales de suma nula e información perfecta, 22-23 tema 4 ) casos representar 
+todo árbol de juegos. y los que no 33-40 tema 4. 
+\section{Ramificación. Algoritmo minimax. Poda alfa-beta}
 \textit{Qué es el factor de ramificación y cómo afecta a la complejidad de un juego? Describe en líneas generales el algoritmo minimax y el de la poda alfa-beta }
 (Capítulo 6 del Russell Norvig)
 
@@ -207,24 +542,375 @@ Dada una estructura de árbol el \textbf{factor de ramificación} es el número 
 Que esto en los juegos se manifiesta como el número de movimientos posibles por turno.  
 
 Cuanto mayor sea el factor de ramificación, mayor será la complejidad a la hora de buscar estrategias, ya que 
-llegado cierto punto es imposible una búsqueda exhaustiva de la mejor solución.
+llegado cierto punto es imposible una búsqueda exhaustiva del árbol de juego para alcanzar la mejor solución.
 
 En ajedrez el 
 factor de remificación es 35, que por combinatoria en $m$ movimientos se habrá habido una media de $35^m$ posibilidades.  
-Este es el mismo motivo por el que solo se ha conseguido una IA que juegue como un aficionado en el GO.
+En el caso del Go el factor de ramificación es mayor, y este es el motivo por el que solo se ha conseguido una IA que juegue como un aficionado.
 
-De aquí surgen la estrategias de poda de nodos: 
+De aquí surge la necesitadad de estrategias de poda de nodos, pero antes veamos cómo sería una estrategia óptima. 
 
-\subsection{Algoritmo min-max}
+\subsection{Algoritmo minimax}
+
+Hipótesis o características en las que se basa: 
+
+\begin{itemize}
+  \item Juego por turnos de dos jugadores. 
+  \item Con información perfecta, es decir se conoce con totalidad la situación y posibilidades del oponente. 
+  \item De suma nula, el beneficio para un jugador es la pérdida del otro. 
+\end{itemize}
+Dado un juego por turnos, de dos jugadores MIN y MAX; bajo hipótesis de que el oponente, MIN juegue perfecto; 
+el algoritmo minimax nos provee de una estrategia óptima. 
+
+Esta estrategia se calcula en  función al \textbf{valor minimax}, de cada nodo, que se obtiene de la siguiente manera: 
+
+\begin{itemize}
+  \item Si estamos en un nodo MAX, tomar el máximo de sus nodos hijos.
+  \item Si estamos en nodo MIX, tomar el mínimo de los nodos hijos. 
+\end{itemize}
+
+Esta idea proviene de que ambos juegan perfecto y elegiran la opción más beneficiosa. 
+%$VALOR_MINIMAX(n)=$
+
+%$\left\{ \right$
+
+
+%\left \begin{array}{l}
+% UTILIDAD(n) si n es un nodo terminal. \\
+% max \{ VALOR-MINIMAX(s) |$s$ es sucesor(n) $\}$ \\
+% $max \{ VALOR-MINIMAX(s) |$ $s$ es sucesor(n) $\}$
+%\end{array}
+%\right
+
+Cada \textbf{capa} (nivel del árbol de juego) correspone a un turno de uno de los jugadores, que se va a alternan enter MIN, MAX.
+La idea es que MIN busca la jugada más beneficiosa para él; y como juega perfecto cogerá el valor mínimo (aquel que maximiza su beneficio y minimiza el de MAX) 
+de cada nodo, mientras que MAX actuará de manera contraria, a esto se conoce como \textbf{decisión minimax.}
+
+El \textbf{algoritmo minimax} por tanto es la implementación de tal exploración primero en profundidad completa de un árbol de juegos
+para sacar el valor minimax y después su selección según criterio de ir cogiendo máximo y mínimo alternadamente. 
+
+Código en haskell 
+(En mi repositorio puede encontrarlo
+https://github.com/BlancaCC/haskell/tree/master/trees )
+\begin{verbatim}
+  data Tree a = Void | Node a [ Tree a] deriving Show
+  -- vm es un la función valor minimax que es del tipo vm :: Ord(b) => a -> b
+
+  action :: Tree a -> [a]
+  action Void _ = []
+  action t = action t maximun
+  action n nsucc f = [ ns ] <> action ns maximun $ map (-) -- de esta manera si f es maximun  ahora es minimum  y al contrario 
+    where  ns = head [ns | ns <- nsucc, (vm ns) == f $ map vm nsucc ]
+\end{verbatim}
+
+
+La complejidad en tiempo del algoritmo minimax es  $\mathcal O (b^m)$ donde $m$ es la profundidad del árbol y 
+$b$ el número de movimientos legales. La complejidad en espacio será $\mathcal{O}(bm)$ si el algoritmo general
+todos los sucesores o $\mathcal{O}(b)$ si solo gnener los de un nodo. 
+
+Por tanto con un orden de tiempo exponencial, es poco práctico. 
+
+\subsection*{Árboles y juegos que se puedan resolver}  
+No tods los juegos se pueden resolver. Los que tienen árboles compeljos resultan imposibles de explorar en su totalidad. Por tanto, debemos 
+distinguir entre juegos en los que si podemos recorrer el árbol de manera completa y en los que no. En estos últimos son cruciales las heurísticas y la poda. 
+\subsubsection*{Juegos multijugadores óptimos}  
+Esta misma idea se puede extrpolar a juegos de más de dos jugadores, donde ahora el valor de cada nodo sería un vector con un vector de valores. 
+El problema a la hora de analizarlo son las alianzas, ¿cómo debemos de entenderlas? Por ello la complejidad de estas situaciones es mucho mayor. 
+
+\subsection{Poda alfa-beta}
+
+La idea de este algoritmo probiene a que podemos devolver la misma solución que el minimax sin analizar todas las ramas,
+es decir \textbf{podando} las que tengamos la certeza de que la solución no es esa. 
+
+Ejemplifiquémoslo en con el siguiente caso concreto de un juego de dos capas: 
+
+\begin{verbatim}
+  MINIMAX-VALUE(raíz) = max(min(3,12,8), min(2,x,y), min(14,5,2))
+                      = max (3, min(2,x,y),2)
+                      = max (3,z,2) donde z menor o igual que 2
+                      = 3
+\end{verbatim}
+
+Se puede observar que independientemente del valor de x,y si este es menor o igual que 2 será ignorado en la función max aunque paseen e filtro de la min y si 
+son mayores que 2 serám ignorados por la función min. 
+
+Por tanto no es necesario que los calculemos. 
+
+\subsubsection*{Descrición del algoritmo de la poda alpha-beta}
+
+Se definen las siguientes variables: 
+
+\begin{itemize}
+  \item $\alpha$ que recogerá el valor de la mejor opción encontrado para MAX, en cierto instante de la búsqueda. (Se inicia a menos infinito).
+  \item $\beta$ la mejor opción para MIN (el valor más bajo), se inicializa  a más infinito. 
+\end{itemize}
+
+Cuando un nodo es peor, es decir menor que el $\alpha$ para MAX y mayor que el $\beta$ para MIN, podemos ignorar ese nodo, 
+ya que no nos conducirá a un camino óptimo. 
+
+\subsubsection*{Eficiencia}
+
+La eficiencia sigue siendo exponencial. Además depemderá muchísimo de cómo se generen los sucesores, siendo el peorde los
+casos en el que aparecen primero los peores nodos; lo cual podría sugerirnos otro algoritmo y que guíado por cierta heurística escoja
+en orden los nodos más prometedores. Si se diera este caso la eficiencia sería $\mathcal{O}(b^{d/2)})$ 
 
 
 
 \newpage
+
+\section{Problemas que plantea el cálculo de predicados en la resolución de problemas de IA}
 3.- ¿Que problemas plantea el cálculo de predicados en la resolución de problemas de IA?
-4.- Modelos de conocimiento heredable ¿Qué tipo de conocimiento organizan las redes semánticas? Describir en líneas generales el concepto de “frame”.
-5.-  Estructura y componentes de un sistema experto 
-6.- Paradigmas de Aprendizaje Automático.
-7.- Describir el problema del ruido y el del sobreajuste en aprendizaje automático.
-8.- ¿Qué son y como se construyen los arboles de decisión
+
+\subsection*{Problemas semánticos}
+\begin{itemize}
+  \item \textbf{Dificultad de expresión} de la heurísticas, metaconocimiento, jerarquía, herecia,igualdad, sentido común, etc mediante el 
+  el cálculo de predicados. 
+  \item Imposibilidad de una representación fiel del tiempo y por ende de un predicado que involucre variables temporales exactas; 
+  ya que físicamente se representaría con una variable continua ( y siendos estrictos de cardinalidad infinito no numerable) lo cual obliga
+  a su discretización.
+  \item Difícil razonamiento a cerca de predicados, por la correspondencia biunivoca entre objetos del mundo... con que se interprestan los predicados esto dificulta 
+  \item Información incompleta y/o imprecisa (vaguedad, probabilidad)
+  \item Excepciones difífil de abstraer una representación. 
+  \item La información puede ser incompleta o imprecisa o estar sujeta a la probabilidad. Luego aunque sepamos las leyes por las que se rige, 
+  la lógica tradicional nos impide o dificulta una representación en el cálculo de sus predicados. (Interesante pues la lógica difusa).
+  \item Monotonia, es decir si una secuencia de fórmulas implica $p$, entontes sea tal secuencia unión otra fórmula que también lo implique. 
+  
+\end{itemize}
+
+\subsubsection*{Problemas computacionales}
+
+\begin{itemize}
+  \item Consistencia: Dos proposiciones opuestas son demostrables, dando lugar a que aquello que se 
+  muestra como verdadero no lo sea. Proviene en parte de que los predicados sean monótomos. Un ejemplo son las paradojas. 
+  \item Completitud: Existencia de proposiciones indemostrables. El cálculo de predicados es por ende semidecidible.
+  \item Complejidad computacional: Lo algoritmos de demostración tienen un orden exponenciales, son computacionalmente complejos.
+\end{itemize}
+(Nota: Teoremas de Gödel: todo sistema axiomático no puede ser consistente ni completo al mismo tiempo).
+\newpage
+
+
+\section{Modelos de conocimiento heredable ¿Qué tipo de conocimiento organizan las redes semánticas? Describir en líneas generales el concepto de “frame”.}
+
+Los modelos de conocimiento heredable asientan sus raíces en la psicología, 
+en modelos de cómo las personas almacenamos la información. 
+
+Comencemos con las definiciones básicas:
+
+\subsubsection*{Redes asociativas}  
+Grafos donde cada nodo representa un concepto o proposición y los enlaces relaciones o categorías gramaticales.
+
+Podemos encontrar las siguientes variedades según su objetivo:
+
+\textbf{Redes de clasificación} aquellas empleadas para clasificar objeto por características;
+\textbf{redes causales} las que llevan asociada una relación de influencia, por los enlace; 
+\textbf{y las redes semánticas} destinada y comprender el lenguaje natural y en las cuales vamos a profundizar un poco más. 
+
+
+\subsubsection*{Redes semánticas}  
+
+La redes semánticas son aquellas destinadas a representar o a comprender el lenguaje natural.
+son un tipo de redes asociativas. 
+Se representan con un grafo dirigido y etiquetado. Los nodos representas conceptos
+y los arcos relaciones entre ellos. 
+
+Bajo una visión de programador podemos entenderlo como clases y las respectivas relaciones entre objetosde la 
+programación orientada a objetos, por lo tanto 
+nos resulta natural que aparezca la herencia también en estos mecanimos de razonamiento. 
+
+
+Es decir un nodo o concepto hereda las propiedades de otro conceptos (nodos) de la jerarquía superior. 
+
+Uno de los problemas que tienen es que a la hora 
+de tratar con sistemas complejos son difíciles de manejar.
+
+Y este punto a mejora da lugar a la idea de sistemas basado en frames. 
+
+
+\subsection{Sistemas basados en frames}
+El conocimiento concierne a individuos o clases de individuos y sus relaciones. 
+y es almacenada en un \textbf{frame o marco} (objeto, unidad, concepto).
+
+Un marco es una estrutura de datos que representan una situación estereotipada y posee atributos, \textbf{conjunto de campos o slot} 
+selectivo que identifica los marcos. 
+
+Su principal tarea son las tareas de reconocimiento: dada una información esta activa marcos que a su vez activa a otros interconectados con los primeros
+dentro de una  \textbf{red de activación}. Y esta dependencia es lo que antes habiamos denomidado herecencia o también conocido por
+reconocimiento descendiente. 
+
+Un inconveniente que tiene este mecanismo de propagación es que no se permite saber si cierto 
+valor es heredado o explícito ni tampoco permite calcular valores de un atributo a partir de otro. 
+
+Para solucionar esto sugen las facetas. 
+
+\subsubsection{Facetas}  
+
+Una faceta es una propiedad asociada a un atributo, como por ejemplo su valor real, uno por defecto, cardinalidad ... o si es heredable o no. 
+
+
+\newpage
+
+
+\section{Estructura y componentes de un sistema experto }
+
+Un sistema basado en conocimiento (SBC) es un programa que emplea masivamene el conocimiento para resolver
+un problema  dentro de un dominio determinado. 
+
+Un sistem experto (SE) es un tipo de BSC se comporta como si se tratara de un profesional del ámbito. 
+Es decir resuelve un problema y puede ser consultado de manera que justifique su razonamiento. 
+
+Necesita tres componentes básicas: 
+
+\begin{itemize}
+  \item Un conocimiento de base: que contenga el conocimiento necesario sobre el dominio a resolver. 
+  \item Un motor de inferencia, que permita razonar sobre el conocimiento de BC y los datos que proporcione el usuario. 
+  \item Interfaz de usuario: para la entrada y salida de datos de cada problema. A veces, los datos de un problema se conocen como Base de Hecho.
+\end{itemize}
+
+Tienen además implementados módulos para dar explicaciones y justificaciones sobre el porqué de las decisiones tomadas. 
+
+Para la representación de los formalismos se utiliza una tripleta (objetos, atributo, valor). Que se puede transformar en conocimiento útil 
+mediante reglas de producción, redes asociativas o redes de marcos. 
+
+\subsection*{Pasos para construir un SBC}  
+
+\begin{enumerate}
+  \item Extraer el conocimientos y extraer la forma abstracta y efectiva de representarlo. 
+  \item Representarlo con el formalismo adecuado para que la máquina lo procese.
+  \item Realizar inferecias para generar información 
+  útil de él. 
+\end{enumerate}
+
+En el proceso de contrucción se extrae el conocimiento experto y se modela y procesa utilizando el lenguaje adecuado. 
+
+El esquema de diseño de un sistema experto basado en reglas contiene en memoria de trabajo la información relevante que el motor
+de inferencia utilizará para razonar las respuestas. 
+
+Algunos ejemplos de SBC son 
+\begin{itemize}
+  \item Anna, el agente conversacional del IKEA.
+  \item Paciente Simulado Virtual para la formación de medicina. 
+\end{itemize}
+
+
+\newpage
+
+\section{Paradigmas de Aprendizaje Automático.}
+El aprendizaje automático es el campo de estudio o rama de la inteligencia artificial que tiene como objetivo que 
+tiene como objetivo el desarrollo de técnicas que permitan modificar el mecanismo de decisión 
+inicial de un agente en base a la experiencia. 
+
+Dicho de un modo más formal: 
+
+Se dice que un programa de computadora aprende de la experiencia E con respecto a alguna tarea T existiendo alguna medida de rendimiento P, si 
+su desempeño T;  medidad por P, mejora la experiencia E.
+
+
+Atendiendo a la definición, las distintas formas de mejorar la experiencia; de aprender son: 
+
+\begin{itemize}
+  \item \textbf{Aprendizaje memorístico} Introducción de un concepto o idea en memoria; es decir partir de una base de conocimiento y mejorarla. Es el aprendizaje clásico. 
+  \item \textbf{Aprendizaje deductivo} Se infiere el nuevo conociemiento a partir de reglas de deducción lógica; es un razonamiento artificial. 
+  \item \textbf{Aprendizaje analítico}  Contruye una explicación para cada ejemplo en relación con un concepto dado y la generaliza para su futuro provecho. Vendría a ser 
+  \textit{aprender a partir de ejemplos.} 
+  \item \textbf{Aprendizaje analógico} Consiste en entender y resolver una situación gracias a su parecido con otras situaciones anteriormente resueltas. 
+  \item \textbf{Aprendizaje inductivo}  Consiste en aprender un concepto o clasificación a partir de ejemplos y contraejemplo. Es el más ampliamente estudiado y como buen ejemplos 
+  tenemos las redes neuronales. 
+\end{itemize}
+
+
+El proceso de aprendizaje se basa pues en la realimentación y en función de qué tipo de conocimiento sea este podemos distinguir: 
+
+\begin{enumerate}
+  \item \textbf{Aprendizaje supervisado} Para cada entrada se dispone de un supervisor que porporciona la salida esperada; esta puede ser una clase, si estamos clasificando o
+  un valor a aproximar, regresión. Es utilizado en los aprendizajes inductivos. 
+  \item \textbf{Aprendizaje no supervisado} La agrupación se realiza en funcición de ciertas características, no se dispone de la salida deseada para cada entrada. 
+  \item \textbf{Aprendzaje por refuerzo}  Basado en el conductivismo; se aprende a partir de la información obtenida al realizar procesos de ensayo-error de los que se obtienen señales de benifico y coste.
+  Es el más utilizado pero no por ello libre de problemas, ya que una retroalimentación negativa no implica que todo el conjutno de acciones pasada fuera erróneo. Es además supervisado en cierto sentido, pero no tiene porqué ser inductivo. 
+
+\end{enumerate}
+
+La herramientas destacables en el aprendizaje son: 
+
+\begin{itemize}
+  \item Técnicas estadísticas.
+  \item Técnicas de árboles.
+  \item Análisis clúster. 
+  \item Modelos bioinspirados: algoritmo genéticos, programación evolutiva, modelos conexionistas (redes neuronales).
+\end{itemize}
+
+\newpage 
+
+
+\section{Describir el problema del ruido y el del sobreajuste en aprendizaje automático.}
+
+En el aprendizaje inductivo el objetivo es encontrar una aplicación $h$ tal que para cualquier par $(x,f(x))$ representando entrada y salida
+del conjunto de entrenamiento se tenga que $h=f.$
+
+$f$ estará \textbf{bien generalizada} si puede predecir ejemplos que no conozca. 
+
+Será \textbf{consistente} si satisface todos los datos. 
+
+Se utilizará el principio de la \textbf{Navaja de Ockham} a la hora de elegir funciones, es decir
+la más sencilla es más probable de que sea la cierta y por eso la tomaremos. 
+
+Finalmente un problema de aprendizaje es \textbf{realizable} si el espacio de hipótesis (el espacio de aplicaciones que intentan ajustarse al problema) existe aquella que lo hace de manera correcta. 
+
+
+Los problemas principales son los iguientes. 
+
+\subsection*{Ruido}  
+
+Cuando se presentas dos o más ejemplos con la misma descripción y diferentes clasificaciones; aunque también puede ocurreir cuando 
+los atributos no describen con suficiente detalle los datos o bajo un dominio no determinista. 
+
+Pensemos que en la matemática, para aplicaciones usuales, cada elemento del dominio tiene una sola imagen.
+Luego esto nos lleva a pensar que los datos no son correctos. 
+
+Como no podemos modificar el conjunto de datos, podemos pensar que una solución posible sería la \textit{combinación} de esos valores conflictivos, 
+en definitiva, realizar una interpolación.  También se podría intentar clasificar los datos problemáticos en dos categorías distintas y ver cuáles producen mejores 
+resultados quedándonos con estos. 
+
+\subsection*{Sobreajuste o overfitting}  
+
+Es consecuencia de que $h$ se aplique a partir de reglas poco significativas; es decir se aprenden hasta los errores. 
+un ejemplo visual muy bueno resultado del reconocimiento sobre ajustado de imágnes 
+es este https://www.nytimes.com/es/2017/08/17/espanol/inteligencia-artificial-arte-musica-google-magenta-nsynth.html
+
+Esto da lugar a que con el set de entrenamiento se consigan muy buenas soluciones, pero que falle en los test de prueba. 
+Otra consecuencia es que $h$ la función de ajuste necesite más información 
+Las soluciones aumentar el tamaño del set de entrenamiento o bien añadiendo nuevos datos válidos o por remuestro (redimensión, volteo de las imágenes previas); 
+si estamos trabajando con árboles de decisión otra posibilidad sería podarlos impidiendo el desarrollo sobre atributos poco relevantes y que el ajuste sea perfecto a los datos de entrenamiento. 
+
+También se puede utilizar la validación cruzada. Que consiste en reservar datos para los test, y con esta reserva promediar los resultados o validar el aprendizaje. 
+
+
+\newpage 
+
+
+\section{Qué son y cómo se construyen los árboles de decisión}
+
+Los árboles de decisión, basados en el algoritmo de divide y vecerás; son un método de apredizaje inductivo. 
+Toman como entrada un objeto o una situación descrita a través de un conjunto de atributos y devuelven una decisión.
+Esa decisión es el valor esperado para tal entrada.
+
+Los tributos pueden ser discretos o continuos; y la salida discreta (clasificación ), o continua (regresión).
+
+Un árbol de decisión desarrolla una secuencia de test para poder alcanzar una decisión. Cada nodo interno 
+se corresponde a un test sobre el valor de una de las propiedades y por ende las ramas en que se bifurca los posibles valores; 
+es decir, cada hoja representa los posibles valores a devolver. 
+
+\subsection*{Forma de contrucción}  
+
+Por aparatados anteriores podríamos pensar en inferir un árbol a partir de cualquier conjunto de entrenamiento, 
+pero para generalizar no es una buena opción, luego se siguen las siguientes técnicas de inferencia: 
+
+\begin{itemize}
+  \item De manera trivial: Contruir un árbol de decisión cuyo camino esté basado en el ejemplo y la hoja sea la salida; es decir, 
+  el camino comprueba cada atributo y sigue el camino del ejemplo. El problema es que memoriza exactamente el problema pero no extrae ningún patrón
+  aplicable a otras instancias. 
+  \item De manera óptima : En consonancia con idea de la navaja de Ockam se crea el árbol más pequeño posible consistente con todas las instancias(ejemplos). Esto no es computacionalemente viable por el coste. 
+  \item De manera pseudo-óptima: busca arreglar el problema anterior utilizando heurísticas más simples y así identificar árboles psudo-óptimos. 
+  La idea básica del algoritmo es hacer el test sobre el atributo más significativo, aquel que discrimina mayor número de ejemplos; y los ejemplos de entrenamiento que lleguen al nodo siguiente se utilizarán para elegir un nuevo atributo. 
+\end{itemize}
 
 \end{document}
